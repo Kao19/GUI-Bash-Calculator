@@ -1,0 +1,304 @@
+#!/bin/bash
+
+
+while [ 1 ];
+do
+
+	choixMenu=$(
+whiptail --title "Menu calculatrice" --menu "choisissez un mode" 25 78 16 \
+        "1)" "Operation de base" \
+        "2)" "Operation Avancé" \
+        "3)" "Operation nombre complexe" \
+        "4)" "Operation binaire" \
+	"5)" "Operation octal" \
+        "6)" "Quit" 3>&2 2>&1 1>&3
+)
+
+
+case $choixMenu in
+            "1)")
+
+			choix=$(
+			whiptail --title "Menu calculatrice" --menu "choisissez une opération" 25 78 16 \
+			"1)" "Addition" \
+			"2)" "Soustraction" \
+			"3)" "Multiplication" \
+			"4)" "Division" \
+			"5)" "Quit" 3>&2 2>&1 1>&3
+			)
+
+    			case $choix in
+	    			"1)")
+				num1=$(whiptail --inputbox "nbr 1:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+				num2=$(whiptail --inputbox "nbr 2:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+
+                 		res=$(( $num1 + $num2 ))
+                 		whiptail --title "resultat" --msgbox " $res  pour continuer cliquer sur OK." 8 78
+
+                 		;;
+	  			"2)")
+				 num1=$(whiptail --inputbox "nbr 1:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+				 num2=$(whiptail --inputbox "nbr 2:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+                		 res=$(( $num1 - $num2 ))
+                		 whiptail --title "resultat" --msgbox " $res  pour continuer cliquer sur OK." 8 78
+
+               			 ;;
+				"3)")
+				num1=$(whiptail --inputbox "nbr 1:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+				num2=$(whiptail --inputbox "nbr 2:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+                		res=$(( $num1 * $num2 ))
+                		whiptail --title "resultat" --msgbox " $res  pour continuer cliquer sur OK." 8 78
+
+                		;;
+				"4)")
+				num1=$(whiptail --inputbox "nbr 1:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+				num2=$(whiptail --inputbox "nbr 2:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+                		res=$(( $num1 / $num2))
+                		whiptail --title "resultat" --msgbox " $res pour continuer cliquer sur OK." 8 78
+
+                		;;
+				"5)")
+               			continue
+                		;;
+           			 esac
+				;;
+
+		 "2)")
+
+				 choix=$(
+        	                whiptail --title "Menu calculatrice" --menu "Choisissez une opération" 25 78 16 \
+                       		 "1)" "Factorielle" \
+				"2)" "puissance" \
+				"3)" "racine" \
+				"4)" "exponentielle" \
+                       		 "5)" "Quit" 3>&2 2>&1 1>&3
+                       		 )
+
+                        	case $choix in
+                                "1)")
+                                num1=$(whiptail --inputbox "nbr 1:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                counter=$num1 
+		                factorial=1
+                		while [ $counter -gt 0 ] 
+               			 do
+                       		 factorial=$(( $factorial * $counter ))
+                        	counter=$(( $counter - 1 ))
+                		done
+               			res=$factorial
+
+                                whiptail --title "resultat" --msgbox " $res pour continuer cliquer sur OK." 8 78
+
+                                ;;
+
+				
+				"2)")
+				num1=$(whiptail --inputbox "nbr 1:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                num2=$(whiptail --inputbox "nbr 2:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+					
+				res=$(($num1 ** $num2))
+				whiptail --title "resultat" --msgbox " $res  pour continuer cliquer sur OK." 8 78
+				;;
+
+				"3)")
+				
+				num=$(whiptail --inputbox "nbr:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+
+                                function sqrt() {  echo "sqrt($1)" | bc -q -i; }
+
+				res="$(sqrt $num)"
+
+
+				whiptail --title "resultat" --msgbox  " $res pour continuer cliquer sur OK." 8 78
+				;;
+
+
+				"4)")
+
+					num=$(whiptail --inputbox "nbr:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+					exponentielle()
+					        {
+              					  echo "scale=3;e($1)" | bc -l
+       						 }
+					res="$(exponentielle $num)"
+					whiptail --title "resultat" --msgbox  " $res pour continuer cliquer sur OK." 8 78
+
+				;;
+
+  				"5)")
+                                continue
+                                ;;
+
+
+				esac
+				;;
+
+			"3)") 
+				 choix=$(
+                                whiptail --title "Menu calculatrice" --menu "choisissez une opération" 25 78 16 \
+                                 "1)" "affiche" \
+                                "2)" "sum" \
+                                "3)" "sub" \
+                                 "4)" "Quit" 3>&2 2>&1 1>&3
+                                 )
+
+                                case $choix in
+                                "1)")
+				num1=$(whiptail --inputbox "partie réelle:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                num2=$(whiptail --inputbox "partie imaginaire:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+
+                                res="$num2 i + $num1"
+                                whiptail --title "resultat" --msgbox " $res  pour continuer cliquer sur OK." 8 78
+                                ;;
+
+				"2)")
+                                num1=$(whiptail --inputbox "nbr1 : partie réelle?" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                num1i=$(whiptail --inputbox "nbr1 : partie imaginaire?" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+				num2=$(whiptail --inputbox "nbr2 : partie réelle?" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                num2i=$(whiptail --inputbox "nbr2 : partie imaginaire?" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+
+				res=$(($num2  + $num1))
+				resi=$(($num2i + $num1i))
+				resFinal="$resi i + $res"
+                                whiptail --title "resultat" --msgbox " $resFinal  pour continuer cliquer sur OK." 8 78
+                                ;;
+
+		
+				"3)")
+                                num1=$(whiptail --inputbox "nbr1 : partie réelle:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                num1i=$(whiptail --inputbox "nbr1 : partie imaginaire:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                num2=$(whiptail --inputbox "nbr2 : partie réelle:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                num2i=$(whiptail --inputbox "nbr2 : partie imaginaire:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+
+                                res=$(($num2  - $num1))
+                                resi=$(($num2i - $num1i))
+                                resFinal="$resi i + $res"
+                                whiptail --title "resultat" --msgbox " $resFinal  pour continuer cliquer sur OK." 8 78
+                                ;;
+				
+				"4)")
+                                continue
+                                ;;
+
+
+			esac
+			;;
+
+
+
+			"4)") 
+
+				choix=$(
+                                whiptail --title "Menu calculatrice" --menu "choisissez une opération" 25 78 16 \
+                                 "1)" "binaireToDecimale" \
+                                "2)" "decimaleToBinary" \
+                                "3)" "binaireToHexa" \
+                                 "4)" "Quit" 3>&2 2>&1 1>&3
+                                 )
+
+                                case $choix in
+                            	"1)")
+				n=$(whiptail --inputbox "binaire à decimale" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+				res="$((2#$n))"
+                                whiptail --title "resultat" --msgbox " $res  pour continuer cliquer sur OK." 8 78
+
+				 	 ;;
+			
+				"2)")
+					n=$(whiptail --inputbox "decimal à binaire" 8 39 --title "input" 3>&1 1>&2 2>&3)
+               			        c=$(echo "obase=2;$n" | bc)
+					whiptail --title "resultat" --msgbox " $c  pour continuer cliquer sur OK." 8 78
+					;;
+
+				"3)")
+					n=$(whiptail --inputbox "binaire à hexa?" 8 39 --title "input" 3>&1 1>&2 2>&3)
+					c=$(printf '%x\n' "$((2#$n))")
+                                        whiptail --title "resultat" --msgbox " $c  pour continuer cliquer sur OK." 8 78
+                                 	;;
+               
+				"4)")
+                                continue
+                                ;;
+
+				esac
+				;;
+
+			  "5)")
+
+				choix=$(
+                                whiptail --title "Menu calculatrice" --menu "Choisissez une opération" 25 78 16 \
+                                 "1)" "octaleToDecimale" \
+                                "2)" "decimaleToOctale" \
+                                "3)" "OctaleToHexa" \
+                                 "4)" "Quit" 3>&2 2>&1 1>&3
+                                 )
+
+                                case $choix in
+                                "1)")
+					n=$(whiptail --inputbox "octale à decimal:?" 8 39 --title "input" 3>&1 1>&2 2>&3)
+                                        c="$((8#$n))"
+                                        whiptail --title "resultat" --msgbox " $c  pour continuer cliquer sur OK." 8 78
+                                        ;;
+                
+				"2)")
+					n=$(whiptail --inputbox "decimale à octale" 8 39 --title "input" 3>&1 1>&2 2>&3)
+                                        c=$(echo "obase=2;$n" | bc)
+                                        whiptail --title "resultat" --msgbox " $c  pour continuer cliquer sur OK." 8 78
+                                        ;;
+             			
+				"3)")
+					n=$(whiptail --inputbox "octale à Hexa" 8 39 --title "input" 3>&1 1>&2 2>&3)
+                                        c=$(printf '%x\n' "$((2#$n))")
+                                        whiptail --title "resultat" --msgbox " $c  pour continuer cliquer sur OK." 8 78
+                                       ;;
+				"4)")
+                                continue
+                                ;;
+
+
+				esac
+				;;
+			
+			
+			"6)")
+                                exit
+                                ;;
+
+
+
+			
+			
+	
+			
+			
+esac
+
+
+
+
+
+
+
+
+done
+     	
