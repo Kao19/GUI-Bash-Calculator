@@ -24,7 +24,8 @@ case $choixMenu in
 			"2)" "Soustraction" \
 			"3)" "Multiplication" \
 			"4)" "Division" \
-			"5)" "Quit" 3>&2 2>&1 1>&3
+			"5)" "Modulo" \
+			"6)" "Quit" 3>&2 2>&1 1>&3
 			)
 
     			case $choix in
@@ -33,8 +34,13 @@ case $choixMenu in
 
 				num2=$(whiptail --inputbox "nbr 2:" 8 39 --title "input" 3>&1 1>&2 2>&3)
 
+				re='^[+-]?[0-9]+([.][0-9]+)?$'
+                                 if ! [[ $num1 =~ $re && $num2 =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
 
-                 		res=$(( $num1 + $num2 ))
+				  res="$( bc <<<"$num1 + $num2" )"
                  		whiptail --title "resultat" --msgbox " $res  pour continuer cliquer sur OK." 8 78
 
                  		;;
@@ -42,7 +48,15 @@ case $choixMenu in
 				 num1=$(whiptail --inputbox "nbr 1:" 8 39 --title "input" 3>&1 1>&2 2>&3)
 
 				 num2=$(whiptail --inputbox "nbr 2:" 8 39 --title "input" 3>&1 1>&2 2>&3)
-                		 res=$(( $num1 - $num2 ))
+
+				 re='^[+-]?[0-9]+([.][0-9]+)?$'
+                                 if ! [[ $num1 =~ $re && $num2 =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
+
+
+                		 res="$( bc <<<"$num1 - $num2" )"
                 		 whiptail --title "resultat" --msgbox " $res  pour continuer cliquer sur OK." 8 78
 
                			 ;;
@@ -50,7 +64,15 @@ case $choixMenu in
 				num1=$(whiptail --inputbox "nbr 1:" 8 39 --title "input" 3>&1 1>&2 2>&3)
 
 				num2=$(whiptail --inputbox "nbr 2:" 8 39 --title "input" 3>&1 1>&2 2>&3)
-                		res=$(( $num1 * $num2 ))
+                		
+				re='^[+-]?[0-9]+([.][0-9]+)?$'
+                                 if ! [[ $num1 =~ $re && $num2 =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
+
+
+				res="$( bc <<<"$num1 * $num2" )"
                 		whiptail --title "resultat" --msgbox " $res  pour continuer cliquer sur OK." 8 78
 
                 		;;
@@ -58,11 +80,39 @@ case $choixMenu in
 				num1=$(whiptail --inputbox "nbr 1:" 8 39 --title "input" 3>&1 1>&2 2>&3)
 
 				num2=$(whiptail --inputbox "nbr 2:" 8 39 --title "input" 3>&1 1>&2 2>&3)
-                		res=$(( $num1 / $num2))
+                		
+				re='^[+-]?[0-9]+([.][0-9]+)?$'
+				reDiv='^[+-]?[1-9]+([.][1-9]+)?$'
+                                 if ! [[ $num1 =~ $re && $num2 =~ $reDiv ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres dont le dénominateur n'est pas null!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
+
+
+				res="$( bc <<<"$num1 / $num2" )"
                 		whiptail --title "resultat" --msgbox " $res pour continuer cliquer sur OK." 8 78
 
                 		;;
+
+
 				"5)")
+                                num1=$(whiptail --inputbox "nbr 1:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                num2=$(whiptail --inputbox "nbr 2:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                re='^[+-]?[0-9]+([.][0-9]+)?$'
+                                 if ! [[ $num1 =~ $re && $num2 =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
+
+
+                                res="$( bc <<<"$num1 % $num2" )"
+                                whiptail --title "resultat" --msgbox " $res pour continuer cliquer sur OK." 8 78
+
+				;;
+
+				"6)")
                			continue
                 		;;
            			 esac
@@ -76,12 +126,23 @@ case $choixMenu in
 				"2)" "puissance" \
 				"3)" "racine" \
 				"4)" "exponentielle" \
-                       		 "5)" "Quit" 3>&2 2>&1 1>&3
+				"5)" "log" \
+				"6)" "sin" \
+				"7)" "cos" \
+				"8)" "tan" \
+                       		 "9)" "Quit" 3>&2 2>&1 1>&3
                        		 )
 
                         	case $choix in
                                 "1)")
                                 num1=$(whiptail --inputbox "nbr 1:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+				
+				re='^[0-9]+$'
+                                 if ! [[ $num1 =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres positifs!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
+
 
                                 counter=$num1 
 		                factorial=1
@@ -102,6 +163,12 @@ case $choixMenu in
 
                                 num2=$(whiptail --inputbox "nbr 2:" 8 39 --title "input" 3>&1 1>&2 2>&3)
 
+				re='^[+-]?[0-9]+([.][0-9]+)?$'
+                                 if ! [[ $num1 =~ $re && $num2 =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
+
 					
 				res=$(($num1 ** $num2))
 				whiptail --title "resultat" --msgbox " $res  pour continuer cliquer sur OK." 8 78
@@ -110,6 +177,12 @@ case $choixMenu in
 				"3)")
 				
 				num=$(whiptail --inputbox "nbr:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+				
+				re='^[0-9]+$'
+                                 if ! [[ $num =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres positifs!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
 
 
                                 function sqrt() {  echo "sqrt($1)" | bc -q -i; }
@@ -125,6 +198,13 @@ case $choixMenu in
 
 					num=$(whiptail --inputbox "nbr:" 8 39 --title "input" 3>&1 1>&2 2>&3)
 
+					re='^[+-]?[0-9]+([.][0-9]+)?$'
+                                 if ! [[ $num =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
+
+
 					exponentielle()
 					        {
               					  echo "scale=3;e($1)" | bc -l
@@ -134,7 +214,81 @@ case $choixMenu in
 
 				;;
 
-  				"5)")
+
+				"5)")	
+					
+					num=$(whiptail --inputbox "nbr:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                re='^[1-9]+$'
+                                 if ! [[ $num =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres positifs!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
+					
+				 function log() { echo "l($1)" | bc -l; }
+				 res="$(log $num)"
+
+                                whiptail --title "resultat" --msgbox  " $res pour continuer cliquer sur OK." 8 78
+				;;
+
+				"6)")
+
+                                        num=$(whiptail --inputbox "nbr:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                re='^[+-]?[0-9]+([.][0-9]+)?$'
+                                 if ! [[ $num =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
+
+                                 function sin() { echo "scale=5;s($1*0.017453293)" | bc -l; }
+                                 res="$(sin $num)"
+
+                                whiptail --title "resultat" --msgbox  " $res pour continuer cliquer sur OK." 8 78
+                                ;;
+
+				"7)")
+
+                                        num=$(whiptail --inputbox "nbr:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                re='^[+-]?[0-9]+([.][0-9]+)?$'
+                                 if ! [[ $num =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
+
+                                 function cos() { echo "scale=5;c($1*0.017453293)" | bc -l; }
+                                 res="$(cos $num)"
+
+                                whiptail --title "resultat" --msgbox  " $res pour continuer cliquer sur OK." 8 78
+                                ;;
+
+
+				"8)")
+
+                                        num=$(whiptail --inputbox "nbr:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                re='^[+-]?[0-9]+([.][0-9]+)?$'
+                                 if ! [[ $num =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres!  pour continuer cliquer sur OK." 8 78
+                                   
+				      continue
+                                  fi
+
+				  if [[ $num == 90 ]] ; then
+                                              whiptail --title "resultat" --msgbox " tan 90 n'est pas définit!  pour continuer cliquer sur OK." 8 78
+                                        continue
+                                     fi
+
+
+                                 function tan() { echo "scale=5;s($1*0.017453293)/c($1*0.017453293)" | bc -l; }
+                                 res="$(tan $num)"
+
+                                whiptail --title "resultat" --msgbox  " $res pour continuer cliquer sur OK." 8 78
+                                ;;
+
+
+  				"9)")
                                 continue
                                 ;;
 
@@ -146,9 +300,11 @@ case $choixMenu in
 				 choix=$(
                                 whiptail --title "Menu calculatrice" --menu "choisissez une opération" 25 78 16 \
                                  "1)" "affiche" \
-                                "2)" "sum" \
-                                "3)" "sub" \
-                                 "4)" "Quit" 3>&2 2>&1 1>&3
+                                "2)" "somme" \
+                                "3)" "soustraction" \
+				"4)" "multiplication" \
+				"5)" "division" \
+                                 "6)" "Quit" 3>&2 2>&1 1>&3
                                  )
 
                                 case $choix in
@@ -156,6 +312,12 @@ case $choixMenu in
 				num1=$(whiptail --inputbox "partie réelle:" 8 39 --title "input" 3>&1 1>&2 2>&3)
 
                                 num2=$(whiptail --inputbox "partie imaginaire:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+				re='^[+-]?[0-9]+([.][0-9]+)?$'
+                                 if ! [[ $num1 =~ $re && $num2 =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
 
 
                                 res="$num2 i + $num1"
@@ -171,9 +333,15 @@ case $choixMenu in
 
                                 num2i=$(whiptail --inputbox "nbr2 : partie imaginaire?" 8 39 --title "input" 3>&1 1>&2 2>&3)
 
+				re='^[+-]?[0-9]+([.][0-9]+)?$'
+                                 if ! [[ $num1 =~ $re && $num2 =~ $re && $num1i =~ $re && $num2i =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
 
-				res=$(($num2  + $num1))
-				resi=$(($num2i + $num1i))
+
+				res="$( bc <<<"$num1 + $num2" )"
+				resi="$( bc <<<"$num2i + $num1i" )"
 				resFinal="$resi i + $res"
                                 whiptail --title "resultat" --msgbox " $resFinal  pour continuer cliquer sur OK." 8 78
                                 ;;
@@ -188,14 +356,71 @@ case $choixMenu in
 
                                 num2i=$(whiptail --inputbox "nbr2 : partie imaginaire:" 8 39 --title "input" 3>&1 1>&2 2>&3)
 
+				re='^[+-]?[0-9]+([.][0-9]+)?$'
+                                 if ! [[ $num1 =~ $re && $num2 =~ $re && $num1i =~ $re && $num2i =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
 
-                                res=$(($num2  - $num1))
-                                resi=$(($num2i - $num1i))
+
+
+                                res="$( bc <<<"$num1 - $num2" )"
+                                resi="$( bc <<<"$num1i - $num2i" )"
                                 resFinal="$resi i + $res"
                                 whiptail --title "resultat" --msgbox " $resFinal  pour continuer cliquer sur OK." 8 78
                                 ;;
 				
 				"4)")
+					
+                                num1=$(whiptail --inputbox "nbr1 : partie réelle:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                num1i=$(whiptail --inputbox "nbr1 : partie imaginaire:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                num2=$(whiptail --inputbox "nbr2 : partie réelle:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                num2i=$(whiptail --inputbox "nbr2 : partie imaginaire:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                re='^[+-]?[0-9]+([.][0-9]+)?$'
+                                 if ! [[ $num1 =~ $re && $num2 =~ $re && $num1i =~ $re && $num2i =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
+
+
+
+				  res="$( bc <<<"$num1*$num2 - $num1i*$num2i" )"
+                                resi="$( bc <<<"$num1i*$num2 + $num1*$num2i" )"
+                                resFinal="$resi i + $res"
+                                whiptail --title "resultat" --msgbox " $resFinal  pour continuer cliquer sur OK." 8 78
+                                ;;
+
+				"5)")
+					num1=$(whiptail --inputbox "nbr1 : partie réelle:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                num1i=$(whiptail --inputbox "nbr1 : partie imaginaire:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                num2=$(whiptail --inputbox "nbr2 : partie réelle:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                num2i=$(whiptail --inputbox "nbr2 : partie imaginaire:" 8 39 --title "input" 3>&1 1>&2 2>&3)
+
+                                re='^[+-]?[0-9]+([.][0-9]+)?$'
+                                 if ! [[ $num1 =~ $re && $num2 =~ $re && $num1i =~ $re && $num2i =~ $re ]] ; then
+                                      whiptail --title "resultat" --msgbox " Essayes s'il vous plait d'entrer des chiffres!  pour continuer cliquer sur OK." 8 78
+                                      continue
+                                  fi
+
+				
+				  n=$(( $num2 * $num2 )) 
+				  u=$((  $num2i * $num2i )) 
+				  q=$(( $n + $u ))
+                                  res="$( bc <<<"$num1*$num2 + $num1i*$num2i / $q " )"
+                                resi="$( bc <<<"$num1i*$num2 - $num1*$num2i / $q " )"
+                                resFinal="$resi i + $res"
+                                whiptail --title "resultat" --msgbox " $resFinal  pour continuer cliquer sur OK." 8 78
+                                ;;
+
+
+				"6)")
                                 continue
                                 ;;
 
@@ -218,7 +443,11 @@ case $choixMenu in
                                 case $choix in
                             	"1)")
 				n=$(whiptail --inputbox "binaire à decimale" 8 39 --title "input" 3>&1 1>&2 2>&3)
-
+				re='^[0-1]+$'
+				if ! [[ $n =~ $re ]] ; then
+  				 whiptail --title "resultat" --msgbox " c'est pas binaire!  pour continuer cliquer sur OK." 8 78
+				continue
+				fi
 				res="$((2#$n))"
                                 whiptail --title "resultat" --msgbox " $res  pour continuer cliquer sur OK." 8 78
 
@@ -226,12 +455,23 @@ case $choixMenu in
 			
 				"2)")
 					n=$(whiptail --inputbox "decimal à binaire" 8 39 --title "input" 3>&1 1>&2 2>&3)
+					re='^[+-]?[0-9]+([.][0-9]+)?$'
+					if ! [[ $n =~ $re ]] ; then
+	                                 whiptail --title "resultat" --msgbox " c'est pas décimale!  pour continuer cliquer sur OK." 8 78
+        	                        continue
+                	                fi
+
                			        c=$(echo "obase=2;$n" | bc)
 					whiptail --title "resultat" --msgbox " $c  pour continuer cliquer sur OK." 8 78
 					;;
 
 				"3)")
 					n=$(whiptail --inputbox "binaire à hexa?" 8 39 --title "input" 3>&1 1>&2 2>&3)
+					re='^[0-1]+$'
+                                        if ! [[ $n =~ $re ]] ; then
+                                         whiptail --title "resultat" --msgbox " c'est pas binaire!  pour continuer cliquer sur OK." 8 78
+                                        continue
+                                        fi
 					c=$(printf '%x\n' "$((2#$n))")
                                         whiptail --title "resultat" --msgbox " $c  pour continuer cliquer sur OK." 8 78
                                  	;;
@@ -256,19 +496,37 @@ case $choixMenu in
                                 case $choix in
                                 "1)")
 					n=$(whiptail --inputbox "octale à decimal:?" 8 39 --title "input" 3>&1 1>&2 2>&3)
+					re='^[0-7]+$'
+                                        if ! [[ $n =~ $re ]] ; then
+                                         whiptail --title "resultat" --msgbox " c'est pas octale!  pour continuer cliquer sur OK." 8 78
+                                        continue
+                                        fi
+
                                         c="$((8#$n))"
                                         whiptail --title "resultat" --msgbox " $c  pour continuer cliquer sur OK." 8 78
                                         ;;
                 
 				"2)")
 					n=$(whiptail --inputbox "decimale à octale" 8 39 --title "input" 3>&1 1>&2 2>&3)
-                                        c=$(echo "obase=2;$n" | bc)
+					re='^[+-]?[0-9]+([.][0-9]+)?$'
+                                        if ! [[ $n =~ $re ]] ; then
+                                         whiptail --title "resultat" --msgbox " c'est pas décimale!  pour continuer cliquer sur OK." 8 78
+                                        continue
+                                        fi
+
+                                        c=$(echo "obase=8;$n" | bc)
                                         whiptail --title "resultat" --msgbox " $c  pour continuer cliquer sur OK." 8 78
                                         ;;
              			
 				"3)")
 					n=$(whiptail --inputbox "octale à Hexa" 8 39 --title "input" 3>&1 1>&2 2>&3)
-                                        c=$(printf '%x\n' "$((2#$n))")
+					re='^[0-7]+$'
+                                        if ! [[ $n =~ $re ]] ; then
+                                         whiptail --title "resultat" --msgbox " c'est pas octale!  pour continuer cliquer sur OK." 8 78
+                                        continue
+                                        fi
+
+                                        c=$(printf '%x\n' "$((8#$n))")
                                         whiptail --title "resultat" --msgbox " $c  pour continuer cliquer sur OK." 8 78
                                        ;;
 				"4)")
